@@ -938,6 +938,7 @@ function load() {
 
         startAjax();
         liveData();
+	local_liveData();
     };
 
     L.NumberedDivIcon = L.Icon.extend({

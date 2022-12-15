@@ -25,6 +25,7 @@ BUILD_DATE="`date -u +%Y-%m-%dT%H:%M:%SZ`"
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge iscroll.js >> mobile.js
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge chasecar.lib.js | sed "s/{VER}/$VERSION/" >> mobile.js
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge tracker.js >> mobile.js
+java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge localtracker.js >> mobile.js
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge app.js | sed "s/{VER}/$VERSION/" | sed "s/{BUILD_DATE}/$BUILD_DATE/" >> mobile.js
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge colour-map.js >> mobile.js
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge xdata.js >> mobile.js
