@@ -36,6 +36,7 @@ function local_liveData() {
 
     function local_connectionError(error) {
         $("#stText").text("conn. error |");
+	console.log(error);
         local_clientConnected = false;
         local_clientActive = false;
         if (!document.getElementById("stTimer").classList.contains('friendly-dtime') ) {
