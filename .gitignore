@@ -3,6 +3,7 @@
 *.log
 js/mobile.js
 js/init_plot.js
+js/version.json
 css/mobile.css
 cache.manifest
 tiles/

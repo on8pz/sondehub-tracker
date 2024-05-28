@@ -26,12 +26,11 @@
 
     <div id="loading">
         <div>
-            <img src="img/sondehub_logo.png" />
-            <img src="img/splash/splash-wide.png" style="transform: translate(-50%,250%);"/>
+            <img src="img/sondehub_au.png" />
+            <img src="img/splash/splash-wide.png" style="transform: translate(-50%,200%);"/>
             <div class="bar" style="display: none"><div class="complete"></div></div>
         </div>
     </div>
-
     <header style="display: none">
         <div class="container">
             <div class="search">
@@ -81,22 +80,28 @@
             <div id="motda">  
                 <h4>User Guide</h4>
                 A User Guide for the tracker is <a href="https://github.com/projecthorus/sondehub-tracker/wiki/SondeHub-Tracker-User-Guide" target="_blank" rel="noopener">available here.</a>
-                
+                <br/>
+                <b>Check the <a href="https://github.com/projecthorus/sondehub-tracker/wiki/SondeHub%E2%80%90Tracker-Changelog" target="_blank" rel="noopener">SondeHub-Tracker Changelog</a> to find info on recent updates.</b>
+                <br/>
                 <h4>Radiosondes?</h4>
                 To learn more check out our 
-                <a href="https://www.youtube.com/watch?v=YBy-bXEWZeM" target="_blank" rel="noopener">LCA video</a>.
-
-                <h4>How do I receive?</h4>
-                Set up a receiver station using 
+                <a href="https://www.youtube.com/watch?v=YBy-bXEWZeM" target="_blank" rel="noopener">LCA video</a>.</br>
+                You can set up a receiver station using 
                 <a href="https://github.com/projecthorus/radiosonde_auto_rx/wiki" target="_blank" rel="noopener">auto_rx</a> or <a href="https://github.com/dl9rdz/rdz_ttgo_sonde" target="_blank" rel="noopener">rdzTTGOsonde</a>.
                 <br/>
                 
-                <h4>Recovered a Sonde?</h4>
+                <h4>Found a Radiosonde?</h4>
                 Click the 'car' icon on the top-right to submit a recovery notification.
 
                 <h4>Support Us!</h4>
-                AWS hosting unfortunately does not come cheap. 
-                If you use SondeHub regularly, please consider <a href="https://www.patreon.com/sondehub" target="_blank" rel="noopener">supporting us on Patreon</a>, or with a <a href="https://sondehub.org/go/donate" target="_blank" rel="noopener">donation on Paypal</a>.
+                If you use SondeHub regularly, please consider <a href="https://www.patreon.com/sondehub" target="_blank" rel="noopener">supporting us on Patreon</a>, or with a <a href="https://sondehub.org/go/donate" target="_blank" rel="noopener">donation on Paypal</a>.</br>
+                We gratefully thank our major supporters: </br>
+                <a href="https://ampr.org" target="_blank" rel="noopener"><img src="img/ardc_logo_small.png" width="40%"/></a> &nbsp;&nbsp; <a href="https://www.graw.de" target="_blank" rel="noopener"><img src="img/graw_logo_small.png" width="40%" /></a>
+                
+                <h4>Contact Us!</h4>
+                For SondeHub usage questions and support, feel free to email us at <a href="mailto:support@sondehub.org">support@sondehub.org</a>.
+                <br/>
+                You can also find us on <a href="https://sondehub.org/go/discord" target="_blank" rel="noopener">Discord</a> and on IRC in <a href="https://kiwiirc.com/nextclient/irc.libera.chat/habhub" target="_blank" rel="noopener">#habhub</a> at <b>libera.chat</b>.
 
                 <h4>Amateur HAB Launches?</h4>
                 You can find Amateur High-Altitude Balloon launches on the <a href="https://amateur.sondehub.org/" target="_blank" rel="noopener">Sondehub-Amateur Tracker</a>.
@@ -111,16 +116,11 @@
                 or upload their position from <a href="https://github.com/projecthorus/chasemapper" target="_blank" rel="noopener">Chasemapper</a> or <a href="https://github.com/dl9rdz/rdz_ttgo_sonde" target="_blank" rel="noopener">rdzTTGOsonde</a>.
                 
             </div>
-            <h2>Contribute</h2>
-            <hr/>
+            <h4>Contribute</h4>
             <p>
                 Did you know the tracker is open-source? Check it out on
                 <a href="https://github.com/projecthorus/sondehub-tracker" target="_blank" rel="noopener">github/sondehub-tracker</a>.
-                Bug reports, suggestions and pull requests are welcome. 
-                <br/><br/>
-                A huge thanks to RGP for developing the mobile tracker that this site is based on.
-                <br/><br/>
-                You can also find us on IRC in <a href="https://kiwiirc.com/nextclient/irc.libera.chat/highaltitude" target="_blank" rel="noopener">#highaltitude</a> at <b>libera.chat</b>.
+                Bug reports, suggestions and pull requests are welcome. A huge thanks to RGP for developing the mobile tracker that this site is based on.
                 <br/><br/>
                 Tracker Revision: <span class="r" id="build_version"></span>
                 <br/>
@@ -292,10 +292,10 @@
             </div>
             <div class="row">
                 <span>Callsign</span>
-                <span class="r"><input type="text" id="cc_callsign" style="width: 140px;"/></span>
+                <span class="r"><input type="text" id="cc_callsign" style="width: 140px;" maxlength="15"/></span>
             </div>
             <div class="row">
-                <span><b>Notice: If you enable this, your location will be uploaded to SondeHub; making it publicly visible on the map.</b></span>
+                <span><b>Notice: If you enable this, your location will be uploaded to SondeHub, making it publicly visible on the map for up to 12 hours.</b></span>
             </div>
             <hr>
             <div class="row">
@@ -326,7 +326,7 @@
             <h3>Report Recovery</h3>
             <hr>
             <div class="row">
-            <span>You can report a recovery here. Enter the serial number (no type code, e.g. 'S1234567'), tick recovered/not recovered, and add some notes. If the sonde is not on the map, type its callsign into the top-left search box and press enter to retrieve historical data. You can then mark it as recovered. Optionally, you can use your location instead of the sonde's last location.</span>
+            <span>You can report a recovery here. Enter the serial number (e.g. 'S1234567'), tick recovered/not recovered, and add some notes. <a href="https://github.com/projecthorus/sondehub-infra/wiki/Radiosonde-Serial-Numbers" target="_blank" rel="noopener">Click here</a> for information on how to locate a sonde's serial number.</a> If the sonde is not on the map, type its serial into the top-left search box and press enter to retrieve historical data. You can then mark it as recovered. Optionally, you can use your location instead of the sonde's last location.</span>
             </div>
             <div class="row">
                 <span><b>Serial</b></span>
@@ -348,7 +348,12 @@
             </div>
             <div class="row">
                 <span><b>Notes</b></span>
-                <span class="r"><input type="text" id="pr_notes" style="width: 140px;"/></span>
+            </div>
+            <div class="row">
+                <span>
+                    <!--<input type="text" id="pr_notes" style="width: 140px;"/>-->
+                    <textarea name="pr_notes" id="pr_notes" style="width:280px;height:60px;"></textarea>
+                </span>
             </div>
             <div class="row">
                 <span><b>Report Result</b></span>
@@ -365,6 +370,11 @@
     </div>
     <div id="homebox" style="width:0px;height:0px"></div>
     <div id="mapscreen">
+        <div style="width: 100%;">
+            <div id="zoom_warning" class="lfloat slickbox" style="width:250px; bottom: 0px;   left: 50%; transform: translate(-50%, -50%);">
+                <div style="width:250px">Zoom in for realtime data!</div>
+            </div>
+        </div>
         <div id="timebox" class="present slickbox animate" style="display: none">
             <svg width="40" height="40" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1" version="1.1" class="lfloat">
                   <path d="M99.812,43.188c-2.77,0-5,2.032-5,4.562v40.875c-4.315,1.97-7.312,6.321-7.312,11.375,0,6.9,5.596,12.5,12.5,12.5,1.05,0,2.06-0.16,3.03-0.41l23.35,23.35c2.23,2.24,5.93,2.13,8.28-0.22s2.42-6.04,0.18-8.28l-23-23c0.42-1.24,0.66-2.56,0.66-3.94,0-5.202-3.17-9.68-7.69-11.562v-40.688c0-2.53-2.23-4.562-4.998-4.562zm-5.906-23c0.031-0.003,0.063,0.002,0.094,0v14.374c0,0.236,0.202,0.438,0.438,0.438h11.122c0.24,0,0.44-0.202,0.44-0.438v-14.343c39.4,2.921,70.86,34.381,73.78,73.781h-14.34c-0.24,0-0.44,0.171-0.44,0.406v11.154c0,0.24,0.2,0.44,0.44,0.44h14.34c-2.92,39.4-34.38,70.86-73.78,73.78v-14.37c0-0.24-0.2-0.41-0.44-0.41h-11.122c-0.236,0-0.438,0.17-0.438,0.41v14.37c-39.4-2.92-70.86-34.38-73.781-73.78h14.343c0.236,0,0.438-0.2,0.438-0.44v-11.154c0-0.235-0.202-0.406-0.438-0.406h-14.343c2.918-39.372,34.33-70.848,73.687-73.812zm6.094-10.188c-49.706,0-90,40.294-90,90,0,49.71,40.294,90,90,90,49.71,0,90-40.29,90-90,0-49.706-40.29-90-90-90zm0-10c55.23,0,100,44.772,100,100,0,55.23-44.77,100-100,100-55.228,0-100-44.77-100-100,0-55.228,44.772-100,100-100z"></path>
@@ -395,23 +405,27 @@
     <div id="main" style="display: none">
         <div class="scrollwrapper">
             <div class="portrait">
-                <div class="row vehicle0"><div class="header empty"><img style="width:90px;height:30px" src="img/hab-spinner.gif"/></div></div>
+                <div class="row vehicle0" id="pv0"><div class="header empty"><img style="width:90px;height:30px" src="img/hab-spinner.gif"/></div></div>
             </div>
             <div class="landscape">
-                <div class="row vehicle0"><div class="header empty"><img style="width:90px;height:30px" src="img/hab-spinner.gif"/></div></div>
+                <div class="row vehicle0" id="lv0"><div class="header empty"><img style="width:90px;height:30px" src="img/hab-spinner.gif"/></div></div>
             </div>
         </div>
     </div>
+
+    <div id="reload_warning">This version of SondeHub is out of date. <a href="javascript:window.location.reload(true)">Click here to reload</a>. Page will reload automatically in <span id="reload_timer"></span>
+    </div>
+
     <!-- Was 3.31-->
     <script type="text/javascript" language="javascript" src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script type="text/javascript" language="javascript" src="https://xc5dqkj2cgb1.statuspage.io/embed/script.js" async defer></script>
-    <script type="text/javascript" language="javascript" src="js/skewt.js"></script>
-    <script type="text/javascript" language="javascript" src="js/aws-sdk-2.1029.0.min.js"></script>
-    <script type="text/javascript" language="javascript" src="js/leaflet.js"></script>
-    <script type="text/javascript" language="javascript" src="js/Leaflet.fullscreen.min.js"></script>
-    <script type="text/javascript" language="javascript" src="js/L.Terminator.js"></script>
-    <script type="text/javascript" language="javascript" src="js/L.TileLayer.NoGap.js"></script>
-    <script type="text/javascript" language="javascript" src="js/paho-mqtt.js"></script>
+    <script type="text/javascript" language="javascript" src="js/skewt.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/aws-sdk-2.1029.0.min.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/leaflet.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/Leaflet.fullscreen.min.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/L.Terminator.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/L.TileLayer.NoGap.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/paho-mqtt.js?v={VER}"></script>
     <!--
     <script type="text/javascript" language="javascript" src="js/iscroll.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery-1.12.4-min.js"></script>
@@ -421,9 +435,9 @@
     <script type="text/javascript" language="javascript" src="js/tracker.js"></script>
     <script type="text/javascript" language="javascript" src="js/color-map.js"></script>
     -->
-    <script type="text/javascript" language="javascript" src="js/mobile.js"></script>
-    <script type="text/javascript" language="javascript" src="js/rbush.js"></script>
-    <script type="text/javascript" language="javascript" src="js/pwa.js"></script>
+    <script type="text/javascript" language="javascript" src="js/mobile.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/rbush.js?v={VER}"></script>
+    <script type="text/javascript" language="javascript" src="js/pwa.js?v={VER}"></script>
     
     </body>
 </html>

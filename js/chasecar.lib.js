@@ -47,7 +47,7 @@ ChaseCar.markRecovered = function(){
 
     // Distance limits reinstated 2021-12-04
     _run_checks = true;
-    _range_limit = 200000; // 200 km
+    _range_limit = 500000; // 200 km
 
     // Get the serial number to be marked recovered
     _serial = $("#pr_serial").val().trim();
@@ -110,7 +110,7 @@ ChaseCar.markRecovered = function(){
         _lookangles = calculate_lookangles(_chaser, _sonde);
 
         if( (_lookangles.range > _range_limit ) && _run_checks){
-            $('#pr_last_report').text("Outside distance limit.");
+            $('#pr_last_report').text("Outside distance limit (500km).");
             return;
         }
 

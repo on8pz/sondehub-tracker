@@ -40,6 +40,10 @@ function lhash_update(history_step) {
         hash += "&nyan=1";
     }
 
+    if(wvar.nena) {
+        hash += "&nena=1";
+    }
+
     hash = encodeURI(hash);
     // set state
     if(history_supported) {
@@ -64,6 +68,7 @@ var wvar = {
     zoom: true,
     query: "",
     nyan: false,
+    nena: false,
     site: 0,
 };
 
@@ -87,6 +92,7 @@ function load_hash(no_refresh) {
         focus: "",
         query: "",
         nyan: false,
+        nena: false,
     };
 
     parms.forEach(function(v) {
@@ -128,6 +134,9 @@ function load_hash(no_refresh) {
             case "nyan":
                 def[k] = !!parseInt(v);
                 break;
+            case "nena":
+                def[k] = !!parseInt(v);
+                break;
             case "site":
                 focusID = v;
                 gotoSite(v);
@@ -136,7 +145,7 @@ function load_hash(no_refresh) {
     });
 
     // check if we should force refresh
-    ['mode','query','nyan'].forEach(function(k) {
+    ['mode','query','nyan','nena'].forEach(function(k) {
         if(wvar[k] != def[k]) refresh = true;
     });
 
@@ -180,6 +189,7 @@ for(var idx in params) {
             $("header .search input[type='text']").val(wvar.query);
             break;
         case "nyan": wvar.nyan = true; break;
+        case "nena": wvar.nena = true; break;
         case "focus": wvar.focus = decodeURIComponent(line[1]); break;
         case "docid": wvar.docid = line[1]; break;
         case "mode": wvar.mode = decodeURIComponent(line[1]); break;
@@ -456,6 +466,7 @@ var updateTime = function(date) {
     }
 };
 
+const version = "{VER}";
 
 $(window).ready(function() {
     // refresh timebox
@@ -464,7 +475,7 @@ $(window).ready(function() {
     }, 1000);
 
     // Update Tracker version info
-    $('#build_version').text("{VER}");
+    $('#build_version').text(version);
     $('#build_date').text("{BUILD_DATE}");
 
     // resize elements if needed
@@ -996,6 +1007,41 @@ $(window).ready(function() {
         wvar.zoom = true;
        }
 
+       // Insert the serial number into the recovery reporting serial number textbox
+       $("#pr_serial").val(text);
+
        clean_refresh(wvar.mode, true, true);
    });
 });
+
+
+function check_version(){
+    const updateRequest = new Request("/js/version.json");
+    fetch(updateRequest)
+        .then(function(response){ return response.json()})
+        .then(function(response){
+            if (response['version'] != version) {
+                window.clearInterval(update_check)
+                reload_timer = window.setTimeout(update_site, response['refresh']*1000)
+                reload_end_time = new Date().getTime() +response['refresh']*1000
+                update_countdown();
+                countdown_interval = setInterval(update_countdown, 100);
+                document.getElementById("reload_warning").style.display = "block";
+            }
+        })
+}
+function update_site(){
+
+    window.location.reload(true)
+}
+
+function update_countdown(){
+    var date = new Date(0);
+    time_remaining = (reload_end_time - new Date().getTime())/1000
+    date.setSeconds(time_remaining);
+    var timeString = date.toISOString().substring(11, 19); // hacky
+    document.getElementById("reload_timer").innerText = timeString;
+}
+
+check_version()
+update_check = setInterval(check_version, 15 * 60 * 1000)

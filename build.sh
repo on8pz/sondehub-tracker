@@ -36,12 +36,15 @@ java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations -
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge _jquery.flot.js >> init_plot.js
 java -jar "../tools/yuicompressor-2.4.8.jar" --type=js --disable-optimizations --nomunge plot_config.js >> init_plot.js
 
+# create version check file
+echo "{\"build_date\": \"$BUILD_DATE\", \"version\": \"$VERSION\", \"refresh\": 86400}" > version.json
+
 cd ..
 echo "Done!"
-echo -n "Generate cache.manifest..."
 
-
-sed "s/^\(# version\) .*$/\1 $VERSION `date +%s`/" cache.manifest-dev > cache.manifest
+# cache fixes
+sed -i'' "s/{VER}/$VERSION/" index.html
+sed -i'' "s/{VER}/$VERSION/" service-worker.js
 
 echo "Done!"
 

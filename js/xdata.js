@@ -592,6 +592,37 @@ function parseSKYDEW(xdata) {
     return _output
 }
 
+function parseKnmiTachometer(xdata) {
+	// KNMI Tachometer for Vaisala OIF411
+	//
+	// Sample data:      80022B5A1EE4001384A407F8   (length = 24 characters)
+
+	// Run some checks over the input
+	if(xdata.length != 24){
+		// Invalid dataset
+		return {};
+	}
+
+	if(xdata.substr(0,2) !== '80'){
+		// Not a KNMI Tachometer (shouldn't get here)
+		return {};
+	}
+
+	var _output = {};
+
+	// uptime (in seconds) of the arduino tachometer board
+	_output['tacho_uptime'] = (parseInt(xdata.substr(4,8),16) * 8 / 1000000).toFixed();
+	
+	// time the Vaisala OIF411 motor needs to make 400 rounds
+	_delta = parseInt(xdata.substr(12,8),16) * 8 / 1000000;
+	_output['tacho_delta'] = _delta.toFixed(3); 
+	
+	// calculated rounds per second
+	_output['tacho_rps'] = (400 / _delta).toFixed(3);
+	
+	return _output
+}
+
 function parseXDATA(data, pressure, temperature){
     // Accept an XDATA string, or multiple XDATA entries, delimited by '#'
     // Attempt to parse each one, and return an object
@@ -622,12 +653,13 @@ function parseXDATA(data, pressure, temperature){
         _instrument = _current_xdata.substr(0,2);
 
         if (_instrument === '01') {
-            if (_current_xdata.length = 16) { 
-                // Ozonesonde
-                _xdata_temp = parseOzonesonde(_current_xdata, pressure);
-                _output = Object.assign(_output,_xdata_temp);
-                if (!_instruments.includes("Ozonesonde")) _instruments.push('Ozonesonde');
+            // Ozonesonde
+            if (_current_xdata.length != 16) { 
+                _current_xdata = _current_xdata.slice(0, 16);
             }
+            _xdata_temp = parseOzonesonde(_current_xdata, pressure);
+            _output = Object.assign(_output,_xdata_temp);
+            if (!_instruments.includes("Ozonesonde")) _instruments.push('Ozonesonde');
         } else if (_instrument === '05'){
             // OIF411
             _xdata_temp = parseOIF411(_current_xdata, pressure);
@@ -682,9 +714,10 @@ function parseXDATA(data, pressure, temperature){
             // POPS
             if (!_instruments.includes("POPS")) _instruments.push('POPS');
         } else if (_instrument === '80'){
-            // Unknown!
-            //console.log("Saw unknown XDATA instrument 0x80.")
-        }else {
+            // KNMI Tachometer
+            _xdata_temp = parseKnmiTachometer(_current_xdata);
+            _output = Object.assign(_output,_xdata_temp);
+        } else {
             // Unknown!
 
         }

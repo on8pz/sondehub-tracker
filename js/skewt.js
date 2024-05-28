@@ -1479,7 +1479,7 @@ function (div, { isTouchDevice, gradient = 45, topp = 50, maxtopp=50, parctempSh
 
     const ranges = {
         parctemp: { value: 10, step: 0.1, min: -50, max: 50 },
-        topp: { min: 50, max: 900, step: 25, value: topp },
+        topp: { min: 10, max: 900, step: 10, value: 50},
         parctempShift: { min: -5, step: 0.1, max: 10, value: parctempShift },
         gradient: { min: 0, max: 85, step: 1, value: gradient },
         //    midtemp:{value:0, step:2, min:-50, max:50},

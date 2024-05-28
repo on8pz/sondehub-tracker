@@ -179,7 +179,7 @@ function drawHistorical (data, station) {
         html = "<div style='line-height:16px;position:relative;'>";
         html += "<div>"+serial+" <span style=''>("+time+")</span></div>";
         html += "<hr style='margin:5px 0px'>";
-        html += "<div style='margin-bottom:5px;'><b><i class='icon-location'></i>&nbsp;</b>"+roundNumber(landing.lat, 5) + ',&nbsp;' + roundNumber(landing.lon, 5)+"</div>";
+        html += "<div><b>Last Position:&nbsp;</b>"+roundNumber(landing.lat, 5) + ',&nbsp;' + roundNumber(landing.lon, 5)+"</div>";
 
         var imp = offline.get('opt_imperial');
         var text_alt = Number((imp) ? Math.floor(3.2808399 * parseInt(landing.alt)) : parseInt(landing.alt)).toLocaleString("us");
@@ -806,7 +806,7 @@ function generateLaunchSites() {
             var burst_altitude = 26000;
             var burst_samples = "";
             var descent_samples = "";
-            var marker = new L.circleMarker(latlon, {color: '#696969', fillColor: "white", radius: 8});
+            var marker = new L.circleMarker(latlon, {color: '#696969', fillColor: "white", radius: Math.min(map.getZoom(),8)});
             var popup = new L.popup({ autoClose: false, closeOnClick: false });
             marker.title = key;
             marker.bindPopup(popup);

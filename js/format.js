@@ -49,6 +49,12 @@ function formatData(data, live) {
             dataTempEntry.gps_alt = data[entry].alt;
             dataTempEntry.gps_lat = data[entry].lat;
             dataTempEntry.gps_lon = data[entry].lon;
+
+            // Discard positions with null values.
+            if (dataTempEntry.gps_lat == 0 && dataTempEntry.gps_lon == 0) {
+                continue;
+            }
+
             if (data[entry].heading) {
                 dataTempEntry.gps_heading = data[entry].heading;
             }
@@ -72,18 +78,26 @@ function formatData(data, live) {
             if (data[entry].hasOwnProperty("humidity")) {
                 dataTempEntry.data.humidity = data[entry].humidity;
             }
-            if (data[entry].manufacturer) {
-                dataTempEntry.data.manufacturer = data[entry].manufacturer;
-            }
             if (data[entry].hasOwnProperty("pressure")) {
                 dataTempEntry.data.pressure = data[entry].pressure;
             }
             if (data[entry].sats) {
                 dataTempEntry.data.sats = data[entry].sats;
+
+                // Drop frames where sats = 0! We do not want to be handling invalid positions.
+                if (dataTempEntry.data.sats == 0){
+                    continue;
+                }
             }
             if (data[entry].hasOwnProperty("temp")) {
                 dataTempEntry.data.temperature_external = data[entry].temp;
             }
+            // RS41 specific stuff
+            if (data[entry].hasOwnProperty("rs41_mainboard")) {
+                dataTempEntry.data.rs41_mainboard = data[entry].rs41_mainboard;
+            }
+            // Removed showing mainboard firmware, not really valuable
+
             if (data[entry].type) {
                 dataTempEntry.data.type = data[entry].type;
                 dataTempEntry.type = data[entry].type;
@@ -92,6 +106,14 @@ function formatData(data, live) {
                 dataTempEntry.data.type = data[entry].subtype;
                 dataTempEntry.type = data[entry].subtype;
             }
+
+            if (data[entry].manufacturer) {
+                // Instead of adding a separate manufacturer field, prefix the type with it.
+                if (dataTempEntry.data.type) {
+                    dataTempEntry.data.type = data[entry].manufacturer + " " + dataTempEntry.data.type;
+                }
+            }
+
             if (data[entry].xdata) {
                 dataTempEntry.data.xdata = data[entry].xdata;
 
@@ -137,6 +159,12 @@ function formatData(data, live) {
                         dataTempEntry.gps_alt = data[key][i].alt;
                         dataTempEntry.gps_lat = data[key][i].lat;
                         dataTempEntry.gps_lon = data[key][i].lon;
+
+                        // Discard positions with null values.
+                        if (dataTempEntry.gps_lat == 0 && dataTempEntry.gps_lon == 0) {
+                            continue;
+                        }
+
                         if (data[key][i].heading) {
                             dataTempEntry.gps_heading = data[key][i].heading;
                         }
@@ -160,14 +188,17 @@ function formatData(data, live) {
                         if (data[key][i].hasOwnProperty("humidity")) {
                             dataTempEntry.data.humidity = data[key][i].humidity;
                         }
-                        if (data[key][i].manufacturer) {
-                            dataTempEntry.data.manufacturer = data[key][i].manufacturer;
-                        }
+
                         if (data[key][i].hasOwnProperty("pressure")) {
                             dataTempEntry.data.pressure = data[key][i].pressure;
                         }
                         if (data[key][i].sats) {
                             dataTempEntry.data.sats = data[key][i].sats;
+
+                            // Drop frames where sats = 0! We do not want to be handling invalid positions.
+                            if (dataTempEntry.data.sats == 0){
+                                continue;
+                            }
                         }
                         if (data[key][i].hasOwnProperty("temp")) {
                             dataTempEntry.data.temperature_external = data[key][i].temp;
@@ -180,6 +211,21 @@ function formatData(data, live) {
                             dataTempEntry.data.type = data[key][i].subtype;
                             dataTempEntry.type = data[key][i].subtype;
                         }
+
+                        if (data[key][i].manufacturer) {
+                            // Instead of adding a separate manufacturer field, prefix the type with it.
+                            if (dataTempEntry.data.type) {
+                                dataTempEntry.data.type = data[key][i].manufacturer + " " + dataTempEntry.data.type;
+                            }
+                        }
+
+                        // RS41 specific stuff
+                        if (data[key][i].hasOwnProperty("rs41_mainboard")) {
+                            dataTempEntry.data.rs41_mainboard = data[key][i].rs41_mainboard;
+                        }
+                        // Removed showing mainboard firmware, not really valuable
+
+                        // XDATA Handling
                         if (data[key][i].xdata) {
                             dataTempEntry.data.xdata = data[key][i].xdata;
                             if (data[key][i].hasOwnProperty("pressure")) {
@@ -244,6 +290,12 @@ function formatData(data, live) {
                 dataTempEntry.gps_alt = data[i].alt;
                 dataTempEntry.gps_lat = data[i].lat;
                 dataTempEntry.gps_lon = data[i].lon;
+
+                // Discard positions with null values.
+                if (dataTempEntry.gps_lat == 0 && dataTempEntry.gps_lon == 0) {
+                    continue;
+                }
+
                 if (data[i].heading) {
                     dataTempEntry.gps_heading = data[i].heading;
                 }
@@ -275,6 +327,11 @@ function formatData(data, live) {
                 }
                 if (data[i].sats) {
                     dataTempEntry.data.sats = data[i].sats;
+                    
+                    // Drop frames where sats = 0! We do not want to be handling invalid positions.
+                    if (dataTempEntry.data.sats == 0){
+                        continue;
+                    }
                 }
                 if (data[i].hasOwnProperty("temp")) {
                     dataTempEntry.data.temperature_external = data[i].temp;
@@ -285,7 +342,8 @@ function formatData(data, live) {
                         dataTempEntry.data.type = v1types[comment[0]];
                         dataTempEntry.type = v1types[comment[0]];
                         if (v1manufacturers.hasOwnProperty(dataTempEntry.type)) {
-                            dataTempEntry.data.manufacturer = v1manufacturers[dataTempEntry.type];
+                            // dataTempEntry.data.manufacturer = v1manufacturers[dataTempEntry.type];
+                            dataTempEntry.data.type = v1manufacturers[dataTempEntry.type] + " " + dataTempEntry.data.type;
                         }
                     }
                     dataTempEntry.data.frequency = comment[2];
@@ -297,6 +355,21 @@ function formatData(data, live) {
                     dataTempEntry.data.type = data[i].subtype;
                     dataTempEntry.type = data[i].subtype;
                 }
+
+                if (data[i].manufacturer) {
+                    // Instead of adding a separate manufacturer field, prefix the type with it.
+                    if (dataTempEntry.data.type) {
+                        dataTempEntry.data.type = data[i].manufacturer + " " + dataTempEntry.data.type;
+                    }
+                }
+
+                // RS41 specific stuff
+                if (data[i].hasOwnProperty("rs41_mainboard")) {
+                    dataTempEntry.data.rs41_mainboard = data[i].rs41_mainboard;
+                }
+                // Removed showing mainboard firmware, not really valuable
+
+                // XDATA Handling
                 if (data[i].xdata) {
                     dataTempEntry.data.xdata = data[i].xdata;
                     if (data[i].hasOwnProperty("pressure")) {
